@@ -16,11 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@RequestMapping("/products")
 public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity getAll() {
         List<Product> products = productService.getAll();
         return ResponseEntity.ok(products);
@@ -32,7 +33,7 @@ public class ProductController {
         return ResponseEntity.ok(product);
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity add(@RequestBody Product product) {
         productService.add(product);
         return ResponseEntity.noContent().build();
