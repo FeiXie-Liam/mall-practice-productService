@@ -1,6 +1,5 @@
 package com.thoughtworks.demo.UnitTest;
 
-import com.github.andrewoma.dexx.collection.ArrayList;
 import com.thoughtworks.demo.exception.ProductNotFoundException;
 import com.thoughtworks.demo.model.Product;
 import com.thoughtworks.demo.repository.ProductRepository;
@@ -14,7 +13,6 @@ import org.mockito.MockitoAnnotations;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;

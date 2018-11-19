@@ -1,19 +1,22 @@
 buildscript {
     ext {
-        springBootVersion = '2.0.6.RELEASE'
+        springBootVersion = '2.0.1.RELEASE'
     }
     repositories {
         mavenCentral()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.springframework.cloud:spring-cloud-contract-gradle-plugin:${springBootVersion}")
     }
 }
 
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'spring-cloud-contract'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'maven-publish'
 
 group = 'com.thoughtworks'
 version = '0.0.1-SNAPSHOT'
@@ -23,6 +26,17 @@ repositories {
     mavenCentral()
 }
 
+publishing {
+    repositories {
+        maven {
+            url 'http://localhost:8081/nexus/content/repositories/snapshots/'
+            credentials {
+                username = 'admin'
+                password = 'admin123'
+            }
+        }
+    }
+}
 
 ext {
     springCloudVersion = 'Finchley.SR2'
@@ -33,12 +47,17 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-jdbc')
     implementation('org.springframework.boot:spring-boot-starter-web')
     implementation('org.flywaydb:flyway-core')
-    implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
-    implementation('org.springframework.cloud:spring-cloud-starter-netflix-zuul')
     runtimeOnly('mysql:mysql-connector-java')
     compileOnly('org.projectlombok:lombok')
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation('org.springframework.cloud:spring-cloud-starter-contract-verifier')
+    testCompile('com.github.database-rider:rider-spring:1.2.9') {
+        exclude group: 'org.slf4j', module: 'slf4j-simple'
+    }
+}
+
+contracts {
+    packageWithBaseClasses = "com.thoughtworks.demo.ContractTest"
 }
 
 dependencyManagement {
