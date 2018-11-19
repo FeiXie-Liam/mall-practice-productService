@@ -5,7 +5,7 @@ import org.springframework.cloud.contract.spec.Contract
 Contract.make {
     request {
         method DELETE()
-        url("/1")
+        url value(producer("/1"), consumer(regex("/\\d+")))
     }
 
     response {

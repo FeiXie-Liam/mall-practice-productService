@@ -18,6 +18,16 @@ Contract.make {
                 "productionPlace": "成都"
             }
         ''')
+
+        bodyMatchers {
+            jsonPath('$.name', byRegex("^[\\u4e00-\\u9fa5_a-zA-Z0-9]+\$"))
+            jsonPath('$.price', byRegex(number()))
+            jsonPath('$.category', byRegex("^[\\u4e00-\\u9fa5_a-zA-Z0-9]+\$"))
+            jsonPath('$.brand', byRegex("^[\\u4e00-\\u9fa5_a-zA-Z0-9]+\$"))
+            jsonPath('$.description', byRegex("^[\\u4e00-\\u9fa5_a-zA-Z0-9]+\$"))
+            jsonPath('$.productionDate', byRegex(isoDate()))
+            jsonPath('$.productionPlace', byRegex("^[\\u4e00-\\u9fa5_a-zA-Z0-9]+\$"))
+        }
     }
 
     response {
